@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+
+    {% block title %}Edit User{% endblock %}
+
+    {% block body %}
+    {% if app.user and (app.user.id == user.id) %}
+        <h1>Edit User</h1>
+
+        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+        <a href="{{ path('user_index') }}">back to list</a>
+    {% endif %}
+    {% endblock %}
+

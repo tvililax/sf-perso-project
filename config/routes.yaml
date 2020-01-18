@@ -1,0 +1,9 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+user_edit:
+    path: /user/{id}/edit
+    controller: App\Controller\UserController::edit
+    requirements:
+        

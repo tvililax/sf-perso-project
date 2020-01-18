@@ -1,0 +1,92 @@
+/*** theme ***/
+h1,h2,p,a {
+    font-family: sans-serif;
+}
+
+body {
+    margin: 0 auto;
+}
+
+.example-wrapper h2 {
+    text-align:left;
+}
+
+.example-wrapper h1 {
+    text-align:center;
+}
+
+/*** top navbar ***/
+.mb-3 {
+    background: black;
+    color: white;
+    padding: 10px;
+}
+
+.mb-3 ul{
+    padding: 0;
+    margin: 0;
+}
+
+.mb-3 a {
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 10px;
+}
+
+.mb-3 ul a li {
+    display: inline;
+}
+
+.mb-3 a:hover {
+    color: grey;
+}
+
+.mb-3 a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+.mb-3 a:visited:hover {
+    color: lightgrey;
+    text-decoration: none;
+}
+
+/*** textes ***/
+.main-navbar li{
+    display: inline;
+    margin-right: 20px;
+}
+
+.main-navbar li{
+    color: black;
+}
+
+.main-navbar {
+    font-size: 12px;
+    padding:0;
+    margin-left: 20px;
+}
+
+.main-navbar a:visited{
+    color:black;
+}
+
+.example-wrapper { 
+    width: 100%; 
+    text-align: center;
+    font: 18px/1.5 sans-serif; 
+}
+
+.example-wrapper code { 
+    background: #F5F5F5; 
+    padding: 2px 6px; 
+}
+
+.example-wrapper.info{
+    line-height: 0.3em;
+}
+
+.example-wrapper.info{
+    text-align: left;
+}
