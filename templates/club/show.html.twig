@@ -3,20 +3,14 @@
 {% block title %}Club{% endblock %}
 
 {% block body %}
-    <h1>Club</h1>
+<div style="height:100px; width:100%; display:flex; justify-content:column; align-items:center;">
+    <h1 style="margin-right: 15px;">{{ club.name }} </h1> <img src="{{ club.logo }}" style="width:50px;" alt="" /> 
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ club.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ club.name }}</td>
-            </tr>
-        </tbody>
-    </table>
+</div>
+    <i>{{ club.stadium }}</i>
+
+    <h2>Histoire</h2>
+    <p>{{ club.info }}</p>
     <p> Le club a <b>{{ club.users|length }}</b> {% if club.users|length > 1 %} fans {% else %} fan {% endif %} sur le site</p>
     {% for user in club.users %}
         <a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a> <br>

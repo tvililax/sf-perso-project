@@ -4,30 +4,23 @@
 
 {% block body %}
     <h1>Club index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
+    <table>
         <tbody>
         {% for club in clubs %}
-            <tr>
-                <td>{{ club.id }}</td>
-                <td>{{ club.name }}</td>
-                <td>
-                    <a href="{{ path('club_show', {'id': club.id}) }}">show</a>
-                    {# <a href="{{ path('club_edit', {'id': club.id}) }}">edit</a> #}
-                </td>
-            </tr>
+        <tr>
+            <td style="display:flex; flex-direction:column; align-items:center;">
+               <img src="{{ club.logo }}" style="height:30px;" alt="" /> </td>
+            <td>
+               <a style="margin-left: 15px;" href="{{ path('club_show', {'id': club.id}) }}">{{ club.name }} </a>
+            </td>
+                {# <a href="{{ path('club_edit', {'id': club.id}) }}">edit</a> #}
+        </tr>
         {% else %}
             <tr>
                 <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
 

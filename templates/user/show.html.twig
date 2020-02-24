@@ -4,22 +4,16 @@
 
 {% block body %}
 
-    <h1>User</h1>
+    <p style="font-size:25px;">Profil de <b>{{ user.username }}</b></p>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
+            {% if (app.user and (app.user.id == user.id)) %}
+                <tr>
+                    <th>Email</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+            {% endif %}
             {% if user.bio %}
             <tr>
                 <th>Bio</th>
@@ -27,10 +21,10 @@
             </tr>
             {% endif %}
             {% if user.club %}
-            <tr>
-                <th>Club supporté</th>
-                <td>{{ user.club }}</td>
-            </tr>
+                <tr>
+                    <th>Club supporté</th>
+                    <td><a href="{{ path('club_show', {'id': user.club.id}) }}">{{ user.club }}</a></td>
+                </tr>
             {% endif %}
         </tbody>
     </table>

@@ -28,6 +28,21 @@ class Club
      */
     private $users;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $stadium;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $info;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $logo;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -81,6 +96,42 @@ class Club
                 $user->setClubId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStadium(): ?string
+    {
+        return $this->stadium;
+    }
+
+    public function setStadium(string $stadium): self
+    {
+        $this->stadium = $stadium;
+
+        return $this;
+    }
+
+    public function getInfo(): ?string
+    {
+        return $this->info;
+    }
+
+    public function setInfo(string $info): self
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    public function getLogo(): ?string
+    {
+        return $this->logo;
+    }
+
+    public function setLogo(string $logo): self
+    {
+        $this->logo = $logo;
 
         return $this;
     }
