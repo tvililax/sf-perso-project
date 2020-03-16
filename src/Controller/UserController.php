@@ -55,6 +55,7 @@ class UserController extends AbstractController
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'msg' => ''
         ]);
     }
 
@@ -69,7 +70,10 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('user_index');
+            return $this->render('user/show.html.twig', [
+                'user' => $user,
+                'msg' => 'Profil modifié avec succès !'
+            ]);
         }
 
         return $this->render('user/edit.html.twig', [
@@ -91,4 +95,23 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('user_index');
     }
+
+    /**
+     * @Route("/{id}/addfriend/{targetId}", name="user_addfriend", methods={"GET","POST"})
+     */
+    public function addFriendAction (Request $request, User $id, User $targetId): Response
+    {
+        
+        $id->addFriend($targetId);
+
+        $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($id);
+            $entityManager->flush();
+
+        return $this->render('user/show.html.twig', [
+            'user' => $targetId,
+            'msg' => 'Ami ajouté !'
+        ]);
+    }
+
 }

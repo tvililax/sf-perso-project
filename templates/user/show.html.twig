@@ -3,9 +3,23 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-
     <p style="font-size:25px;">Profil de <b>{{ user.username }}</b></p>
+    {% set flag = false %}
+    {% if app.user.id != user.id %}
+    {% for friend in app.user.friends %}
+        {% if friend.username == user.username %}
+            DEJA AMIS
+            {% set flag = true %}
+        {% endif %}
+    {% endfor %}
+        {% if not flag %}
+        <a href="{{ path('user_addfriend', {'id': app.user.id, 'targetId': user.id}) }}">ADD FRIEND</a>
+        {% endif %}
+    {% endif %}
 
+    {% if msg %}
+        <p style="color:green;"> {{ msg }} </p>
+    {% endif %}
     <table class="table">
         <tbody>
             {% if (app.user and (app.user.id == user.id)) %}
@@ -23,14 +37,35 @@
             {% if user.club %}
                 <tr>
                     <th>Club supporté</th>
-                    <td><a href="{{ path('club_show', {'id': user.club.id}) }}">{{ user.club }}</a></td>
+                    <td>
+                        <a href="{{ path('club_show', {'id': user.club.id}) }}">
+                        <img src="{{ user.club.logo }}" style="height:30px;" alt="" />
+                        {{ user.club.name }}
+                        </a>
+                        {% if user.since %}
+                            depuis {{ user.since }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+            {% if user.club %}
+                <tr>
+                    <th>Localisation</th>
+                    <td>
+                        {{ user.location }}
+                    </td>
                 </tr>
             {% endif %}
         </tbody>
     </table>
 {% if (app.user and (app.user.id == user.id)) %}
 
+    <p>Mes amis</p>
+
+    {% for friend in user.friends %}
+        <a style="margin-left: 15px;" href="{{ path('user_show', {'id': friend.id}) }}">{{ friend.username }}</a> <br>
+    {% endfor %}
+
     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 {% endif %}
-    <a href="{{ path('user_index') }}">back to list</a>
 {% endblock %}

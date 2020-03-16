@@ -34,7 +34,7 @@ class Club
     private $stadium;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $info;
 
