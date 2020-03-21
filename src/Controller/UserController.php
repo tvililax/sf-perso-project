@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Ad;
+use App\Form\AdType;
 use App\Repository\UserRepository;
+use App\Repository\AdRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +58,8 @@ class UserController extends AbstractController
     {
         return $this->render('user/show.html.twig', [
             'user' => $user,
-            'msg' => ''
+            'msg' => '',
+            'ads' => $user->getAds(),
         ]);
     }
 
@@ -72,13 +76,15 @@ class UserController extends AbstractController
 
             return $this->render('user/show.html.twig', [
                 'user' => $user,
-                'msg' => 'Profil modifié avec succès !'
+                'msg' => 'Profil modifié avec succès !',
+                'ads' => $user->getAds(),
             ]);
         }
 
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'ads' => $user->getAds(),
         ]);
     }
 
@@ -110,8 +116,27 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $targetId,
-            'msg' => 'Ami ajouté !'
+            'msg' => 'Ami ajouté !',
+            'ads' => $targetId->getAds(),
         ]);
     }
 
+    /**
+     * @Route("/{id}/removefriend/{targetId}", name="user_removefriend", methods={"GET","POST"})
+     */
+    public function removeFriendAction (Request $request, User $id, User $targetId): Response
+    {
+        
+        $id->removeFriend($targetId);
+
+        $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($id);
+            $entityManager->flush();
+
+        return $this->render('user/show.html.twig', [
+            'user' => $targetId,
+            'msg' => 'Ami supprimé !',
+            'ads' => $targetId->getAds(),
+        ]);
+    }
 }

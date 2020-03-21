@@ -5,10 +5,10 @@
 {% block body %}
     <p style="font-size:25px;">Profil de <b>{{ user.username }}</b></p>
     {% set flag = false %}
-    {% if app.user.id != user.id %}
+    {% if app.user and (app.user.id != user.id) %}
     {% for friend in app.user.friends %}
         {% if friend.username == user.username %}
-            DEJA AMIS
+            <a href="{{ path('user_removefriend', {'id': app.user.id, 'targetId': user.id}) }}">DELETE FRIEND</a>
             {% set flag = true %}
         {% endif %}
     {% endfor %}
@@ -58,7 +58,10 @@
             {% endif %}
         </tbody>
     </table>
+
 {% if (app.user and (app.user.id == user.id)) %}
+
+    {% if user.friends|length > 0 %} 
 
     <p>Mes amis</p>
 
@@ -66,6 +69,69 @@
         <a style="margin-left: 15px;" href="{{ path('user_show', {'id': friend.id}) }}">{{ friend.username }}</a> <br>
     {% endfor %}
 
+    {% else %}
+        <p>Vous n'avez pas encore d'amis :(</p>
+        {% if user.club %}
+            <a href="{{ path('club_show', {'id': user.club.id}) }}"><p>Voir les membres fans de mon club</p></a>
+        {% endif %}
+    {% endif %}
+
     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+{% else %}
+
+    {% if user.friends|length > 0 %}
+        {% if user.friends|length > 1 %}
+            {{ user.username }} a <b>{{ user.friends|length }}</b> amis.
+        {% else %}
+            {{ user.username }} a <b>{{ user.friends|length }}</b> ami.
+        {% endif %}
+    {% else %}
+        {{ user.username }} n'a pas encore d'amis.
+    {% endif %}
+
 {% endif %}
+
+<h2>Evènements organisés</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ad in ads %}
+            <tr>
+                <td>{{ ad.id }}</td>
+                <td>{{ ad.title }}</td>
+                <td>{{ ad.description }}</td>
+                <td>
+                    <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
+                    {% if app.user and (app.user.id == user.id) %}
+                        <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if app.user and (app.user.id == user.id) %}
+        <a href="{{ path('ad_new') }}">Create new</a>
+    {% endif %}
+
+    <h2>Participations aux activités</h2>
+    {% for activity in user.activities %}
+        <a href="{{ path('ad_show', {'id': activity.id}) }}"> {{ activity.title }}</a>
+    {% endfor %}
+
+
+
 {% endblock %}

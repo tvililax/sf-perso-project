@@ -72,10 +72,22 @@ class User implements UserInterface
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Ad", mappedBy="author")
+     */
+    private $ads;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Ad", mappedBy="participants")
+     */
+    private $activities;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->friends = new ArrayCollection();
+        $this->ads = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function __toString(){
@@ -291,4 +303,64 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Ad[]
+     */
+    public function getAds(): Collection
+    {
+        return $this->ads;
+    }
+
+    public function addAd(Ad $ad): self
+    {
+        if (!$this->ads->contains($ad)) {
+            $this->ads[] = $ad;
+            $ad->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAd(Ad $ad): self
+    {
+        if ($this->ads->contains($ad)) {
+            $this->ads->removeElement($ad);
+            // set the owning side to null (unless already changed)
+            if ($ad->getAuthor() === $this) {
+                $ad->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ad[]
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Ad $activity): self
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities[] = $activity;
+            $activity->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Ad $activity): self
+    {
+        if ($this->activities->contains($activity)) {
+            $this->activities->removeElement($activity);
+            $activity->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
 }
