@@ -82,12 +82,18 @@ class User implements UserInterface
      */
     private $activities;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="author")
+     */
+    private $posts;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->friends = new ArrayCollection();
         $this->ads = new ArrayCollection();
         $this->activities = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function __toString(){
@@ -358,6 +364,37 @@ class User implements UserInterface
         if ($this->activities->contains($activity)) {
             $this->activities->removeElement($activity);
             $activity->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Post[]
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Post $post): self
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+            $post->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Post $post): self
+    {
+        if ($this->posts->contains($post)) {
+            $this->posts->removeElement($post);
+            // set the owning side to null (unless already changed)
+            if ($post->getAuthor() === $this) {
+                $post->setAuthor(null);
+            }
         }
 
         return $this;

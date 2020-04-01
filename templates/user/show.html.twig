@@ -3,97 +3,111 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <p style="font-size:25px;">Profil de <b>{{ user.username }}</b></p>
     {% set flag = false %}
     {% if app.user and (app.user.id != user.id) %}
     {% for friend in app.user.friends %}
         {% if friend.username == user.username %}
-            <a href="{{ path('user_removefriend', {'id': app.user.id, 'targetId': user.id}) }}">DELETE FRIEND</a>
+            <a href="{{ path('user_removefriend', {'id': app.user.id, 'targetId': user.id}) }}">DELETE FRIEND <i class="fas fa-user-times"></i></a>
             {% set flag = true %}
         {% endif %}
     {% endfor %}
         {% if not flag %}
-        <a href="{{ path('user_addfriend', {'id': app.user.id, 'targetId': user.id}) }}">ADD FRIEND</a>
+            <a href="{{ path('user_addfriend', {'id': app.user.id, 'targetId': user.id}) }}">ADD FRIEND <i class="fas fa-user-plus"></i></a>
         {% endif %}
     {% endif %}
 
     {% if msg %}
-        <p style="color:green;"> {{ msg }} </p>
+        <p style="color:palegreen;"> {{ msg }} </p>
     {% endif %}
-    <table class="table">
-        <tbody>
-            {% if (app.user and (app.user.id == user.id)) %}
+    <h2> {{ user.username }} </h2>
+    <div id="main-profile">
+        <table class="table bloc-profil">
+            <tbody>
+                {% if (app.user and (app.user.id == user.id)) %}
+                    <tr>
+                        <th class="sous-titre">Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                {% endif %}
+
+                {% if user.club %}
+                    <tr>
+                        <th class="sous-titre">Club favori</th>
+                        <td>
+                            <a href="{{ path('club_show', {'id': user.club.id}) }}">
+                            <img src="{{ user.club.logo }}" style="height:30px;" alt="" />
+                            {{ user.club.name }}
+                            </a>
+                            {% if user.since %}
+                                depuis {{ user.since }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                
+                {% if user.bio %}
                 <tr>
-                    <th>Email</th>
-                    <td>{{ user.email }}</td>
+                    <th class="sous-titre">Bio</th>
+                    <td>{{ user.bio }}</td>
                 </tr>
+                {% endif %}
+        
+                {% if user.location %}
+                    <tr>
+                        <th class="sous-titre"><i class="fas fa-map-marker-alt"></i></th>
+                        <td>
+                            {{ user.location }}
+                        </td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <div class="bloc-profil">
+            {% if app.user and (app.user.id == user.id) %}
+                <a class="cta" href="{{ path('post_new') }}">Poster un flip</a>
             {% endif %}
-            {% if user.bio %}
-            <tr>
-                <th>Bio</th>
-                <td>{{ user.bio }}</td>
-            </tr>
-            {% endif %}
-            {% if user.club %}
-                <tr>
-                    <th>Club supporté</th>
-                    <td>
-                        <a href="{{ path('club_show', {'id': user.club.id}) }}">
-                        <img src="{{ user.club.logo }}" style="height:30px;" alt="" />
-                        {{ user.club.name }}
-                        </a>
-                        {% if user.since %}
-                            depuis {{ user.since }}
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endif %}
-            {% if user.club %}
-                <tr>
-                    <th>Localisation</th>
-                    <td>
-                        {{ user.location }}
-                    </td>
-                </tr>
-            {% endif %}
-        </tbody>
-    </table>
 
-{% if (app.user and (app.user.id == user.id)) %}
+            {% for post in user.posts %}
+                <p> {{ post.content}} le {{ post.postedAt|format_datetime(locale='fr') }}</p>
+            {% endfor %}
+        </div>
+        <div class="bloc-profil">
+    {% if (app.user and (app.user.id == user.id)) %}
 
-    {% if user.friends|length > 0 %} 
+        {% if user.friends|length > 0 %} 
 
-    <p>Mes amis</p>
+        <p>Mes amis</p>
 
-    {% for friend in user.friends %}
-        <a style="margin-left: 15px;" href="{{ path('user_show', {'id': friend.id}) }}">{{ friend.username }}</a> <br>
-    {% endfor %}
+        {% for friend in user.friends %}
+            <a style="margin-left: 15px;" href="{{ path('user_show', {'id': friend.id}) }}">{{ friend.username }}</a> <br>
+        {% endfor %}
 
-    {% else %}
-        <p>Vous n'avez pas encore d'amis :(</p>
-        {% if user.club %}
-            <a href="{{ path('club_show', {'id': user.club.id}) }}"><p>Voir les membres fans de mon club</p></a>
-        {% endif %}
-    {% endif %}
-
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
-{% else %}
-
-    {% if user.friends|length > 0 %}
-        {% if user.friends|length > 1 %}
-            {{ user.username }} a <b>{{ user.friends|length }}</b> amis.
         {% else %}
-            {{ user.username }} a <b>{{ user.friends|length }}</b> ami.
+            <p>Vous n'avez pas encore d'amis :(</p>
+            {% if user.club %}
+                <a href="{{ path('club_show', {'id': user.club.id}) }}"><p>Voir les membres fans de mon club</p></a>
+            {% endif %}
         {% endif %}
-    {% else %}
-        {{ user.username }} n'a pas encore d'amis.
-    {% endif %}
 
-{% endif %}
+
+    {% else %}
+
+        {% if user.friends|length > 0 %}
+            {% if user.friends|length > 1 %}
+                <p>{{ user.username }} a <b>{{ user.friends|length }}</b> amis.</p>
+            {% else %}
+                <p>{{ user.username }} a <b>{{ user.friends|length }}</b> ami.</p>
+            {% endif %}
+        {% else %}
+            <p>{{ user.username }} n'a pas encore d'amis.</p>
+        {% endif %}
+
+    {% endif %}
+    </div>
+    </div>
 
 <h2>Evènements organisés</h1>
-
+    {% if ads|length > 0 %}
     <table class="table">
         <thead>
             <tr>
@@ -104,27 +118,30 @@
             </tr>
         </thead>
         <tbody>
-        {% for ad in ads %}
-            <tr>
-                <td>{{ ad.id }}</td>
-                <td>{{ ad.title }}</td>
-                <td>{{ ad.description }}</td>
-                <td>
-                    <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
-                    {% if app.user and (app.user.id == user.id) %}
-                        <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
-                    {% endif %}
-                </td>
-            </tr>
+        
+            {% for ad in ads %}
+                <tr>
+                    <td>{{ ad.id }}</td>
+                    <td>{{ ad.title }}</td>
+                    <td>{{ ad.description }}</td>
+                    <td>
+                        <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
+                        {% if app.user and (app.user.id == user.id) %}
+                            <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+        
+            {% endfor %}
+
         {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <p>Pas encore d'évènements organisés</p>
+        {% endif %}
+        
     {% if app.user and (app.user.id == user.id) %}
-        <a href="{{ path('ad_new') }}">Create new</a>
+        <a class="cta" href="{{ path('ad_new') }}">Créer un évènement <i class="fas fa-edit"></i></a>
     {% endif %}
 
     <h2>Participations aux activités</h2>

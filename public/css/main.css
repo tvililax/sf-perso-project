@@ -1,10 +1,68 @@
 /*** theme ***/
-h1,h2,p,a {
-    font-family: sans-serif;
+p,a,ul,a li,tbody,thead,b,i,table,label{
+    font-family: Quicksand;
+    color:white;
+}
+
+h1,h2{
+    font-family: Montserrat;
+    color:white;
+}
+
+h1{
+    text-align: center;
+}
+
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.sous-titre{
+    font-family: Montserrat;
 }
 
 body {
     margin: 0 auto;
+    width: 90%;
+    background: #333;
+}
+
+#main-profile{
+    display: flex;
+    margin:0 auto;
+}
+
+.bloc-profil{
+    background: #3c3c3c;
+    padding: 20px;
+    width: 30%;
+    margin: 10px;
+}
+
+.cta{
+    background:#c3ff99;
+    border-radius: 20px;
+    color:#333;
+    font-family: Montserrat;
+    padding: 8px;
+}
+
+.cta:hover{
+    text-decoration: none !important;
+}
+
+.cta i{
+    color:#333;
+}
+
+#bloc-flip{
+    background: #3c3c3c;
+    padding: 10px;
+    width: 30%;
 }
 
 .example-wrapper h2 {
@@ -53,23 +111,27 @@ body {
 }
 
 /*** textes ***/
-.main-navbar li{
-    display: inline;
-    margin-right: 20px;
+.main-navbar{
+    margin:0 auto;
+    margin-top: 10px;
+    text-align: center;
+    width:100% important;
 }
 
 .main-navbar li{
-    color: black;
+    display: inline;
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.main-navbar li i:hover{
+    color:#c3ff99;
 }
 
 .main-navbar {
     font-size: 12px;
     padding:0;
     margin-left: 20px;
-}
-
-.main-navbar a:visited{
-    color:black;
 }
 
 .example-wrapper { 
@@ -89,4 +151,10 @@ body {
 
 .example-wrapper.info{
     text-align: left;
+}
+
+/*** ***/
+@font-face {
+    font-family: CreamCake;
+    src: url('../fonts/cream_cake/cream.ttf');
 }

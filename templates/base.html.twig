@@ -2,20 +2,24 @@
 <html>
     <head>
         <meta charset="UTF-8">
+
+        <script src="https://kit.fontawesome.com/aee899e7e7.js" crossorigin="anonymous"></script>
+        
         <link href="{{ asset('css/main.css') }}" rel="stylesheet" media="all" type="text/css"> 
+        
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% if app.user %}
             <div class="mb-3">
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
             </div>
             <ul class="main-navbar">
-                <a href="{{ path('index') }}"><li>Accueil</li></a>
-                <a href="{{ path('user_index') }}{{ app.user.id }}"><li>Profil</li></a>
-                <a href="{{ path('club_index') }}"><li>Clubs</li></a>
-                <a href="{{ path('ad_index') }}"><li>Annonces</li></a>
+                <a href="{{ path('index') }}"><li><i class="fas fa-home"></i></li></a>
+                <a href="{{ path('user_index') }}{{ app.user.id }}"><li><i class="fas fa-user"></i></li></a>
+                <a href="{{ path('club_index') }}"><li><i class="fas fa-users"></i></li></a>
+                <a href="{{ path('ad_index') }}"><li><i class="fas fa-calendar-alt"></i></li></a>
             </ul>
         {% else %}
             <div class="mb-3">
@@ -29,9 +33,9 @@
                 </ul>
             </div>
             <ul class="main-navbar">
-                <a href="{{ path('app_logout') }}"><li>Accueil</li></a>
-                <a href="{{ path('club_index') }}"><li>Clubs</li></a>
-                <a href="{{ path('ad_index') }}"><li>Annonces</li></a>
+                <a href="{{ path('app_logout') }}"><li><i class="fas fa-home"></i></li></a>
+                <a href="{{ path('club_index') }}"><li><i class="fas fa-users"></i></li></a>
+                <a href="{{ path('ad_index') }}"><li><i class="fas fa-calendar-alt"></i></li></a>
             </ul>
             
         {% endif %}
