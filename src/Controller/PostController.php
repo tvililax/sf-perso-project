@@ -46,7 +46,12 @@ class PostController extends AbstractController
             $entityManager->persist($post);
             $entityManager->flush();
 
-            return $this->redirectToRoute('post_index');
+            return $this->render('user/show.html.twig', [
+                'user' => $user,
+                'post' => $post,
+                'msg' => 'Message publié avec succès !',
+                'ads' => $user->getAds(),
+            ]);
         }
 
         return $this->render('post/new.html.twig', [

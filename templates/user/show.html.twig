@@ -20,6 +20,10 @@
         <p style="color:palegreen;"> {{ msg }} </p>
     {% endif %}
     <h2> {{ user.username }} </h2>
+    {% if app.user and (app.user.id == user.id) %}
+                <a class="cta" href="{{ path('user_edit', {'id': user.id}) }}">Modifier mon profil</a>
+
+                {% endif %}
     <div id="main-profile">
         <table class="table bloc-profil">
             <tbody>
@@ -59,17 +63,27 @@
                             {{ user.location }}
                         </td>
                     </tr>
+
                 {% endif %}
-            </tbody>
+
+                </tbody>
+                
+                
+            
         </table>
-        <div class="bloc-profil">
+        <div class="bloc-profil" id="bloc-post">
             {% if app.user and (app.user.id == user.id) %}
-                <a class="cta" href="{{ path('post_new') }}">Poster un flip</a>
+                <a class="cta" href="{{ path('post_new') }}">Poster un message <i class="fas fa-edit"></i></a>
             {% endif %}
 
             {% for post in user.posts %}
-                <p> {{ post.content}} le {{ post.postedAt|format_datetime(locale='fr') }}</p>
+                <div class="post-line">
+                    <p> {{ post.content}} <span class="sm-txt">{{ post.postedAt|format_datetime(locale='fr') }}</span></p>
+                </div>
             {% endfor %}
+            {% if user.posts|length < 1 %}
+                <p> {{ user.username }} n'a encore rien posté.</p>
+            {% endif %}
         </div>
         <div class="bloc-profil">
     {% if (app.user and (app.user.id == user.id)) %}

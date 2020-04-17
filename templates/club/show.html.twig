@@ -4,7 +4,7 @@
 
 {% block body %}
 <div style="height:100px; width:100%; display:flex; justify-content:column; align-items:center;">
-    <h1 style="margin-right: 15px;">{{ club.name }} </h1> <img src="{{ club.logo }}" style="width:50px;" alt="" /> 
+    <h1 id='clubName' style="margin-right: 15px;">{{ club.name }} </h1> <img src="{{ club.logo }}" style="width:50px;" alt="" /> 
 
 </div>
     <i>{{ club.stadium }}</i>
@@ -21,4 +21,66 @@
     {# <a href="{{ path('club_edit', {'id': club.id}) }}">edit</a> #}
 
     {# {{ include('club/_delete_form.html.twig') }} #}
+    <div id="news">
+    <h2>Les dernières infos sur le club</h2>
+
+    </div>
 {% endblock %}
+
+{% block javascripts %}
+
+<script>
+
+let clubName = document.getElementById("clubName").innerText.toLowerCase();
+
+var request = new XMLHttpRequest()
+
+request.open('GET', 'https://newsapi.org/v2/everything?q='+clubName+'&language=fr&apiKey=4e996810e3f14fe3bc4e2a05ea00c1f3', true);
+
+request.onload = function() {
+  // Begin accessing JSON data here test
+  var data = JSON.parse(this.response)
+  console.log(data.articles)
+
+  if (request.status >= 200 && request.status < 400) {
+
+    if(data.articles.length <= 9) {
+
+        data.articles.forEach(article => {
+
+            var dateArticle = Date.parse(article.publishedAt);
+            var dateParsed = new Date(dateArticle);
+
+            document.getElementById("news").innerHTML += '<p>'+article.title+' - <span class="media">'+article.source.name+'</span> - '+dateParsed.toLocaleDateString('fr-FR')+'</p>\n';
+
+        })
+
+    } else {
+
+        let tab = [];
+
+        for (let i=0; i <= 9; i++){
+            tab.push(data.articles[i]);
+        }
+        
+        tab.forEach(article => {
+
+            var dateArticle = Date.parse(article.publishedAt);
+            var dateParsed = new Date(dateArticle);
+
+            document.getElementById("news").innerHTML += '<p>'+article.title+' - <span class="media">'+article.source.name+'</span> - '+dateParsed.toLocaleDateString('fr-FR')+'</p>\n';
+            
+        })
+
+    }
+    
+  } else {
+    console.log('error')
+  }
+}
+
+request.send();
+
+</script>
+
+{% endblock %}  

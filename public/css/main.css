@@ -2,6 +2,7 @@
 p,a,ul,a li,tbody,thead,b,i,table,label{
     font-family: Quicksand;
     color:white;
+    font-size: 14px;
 }
 
 h1,h2{
@@ -39,8 +40,12 @@ body {
 .bloc-profil{
     background: #3c3c3c;
     padding: 20px;
-    width: 30%;
+    width: 15%;
     margin: 10px;
+}
+
+#bloc-post{
+    width:65%;
 }
 
 .cta{
@@ -53,10 +58,23 @@ body {
 
 .cta:hover{
     text-decoration: none !important;
+    background:palegreen;
 }
 
 .cta i{
     color:#333;
+}
+
+.sm-txt{
+    font-size: 10px !important;
+    font-style: italic;
+}
+
+.post-line{
+    background: #333;
+    border-radius: 20px;
+    padding: 5px;
+    margin-top:10px;
 }
 
 #bloc-flip{
@@ -75,9 +93,12 @@ body {
 
 /*** top navbar ***/
 .mb-3 {
-    background: black;
     color: white;
     padding: 10px;
+}
+
+.mb-3 ul a li:hover{
+    color: palegreen;
 }
 
 .mb-3 ul{
@@ -115,7 +136,7 @@ body {
     margin:0 auto;
     margin-top: 10px;
     text-align: center;
-    width:100% important;
+    font-size: 16px;
 }
 
 .main-navbar li{
@@ -151,6 +172,11 @@ body {
 
 .example-wrapper.info{
     text-align: left;
+}
+
+.media{
+    font-family: 'Montserrat';
+    font-weight: bold;
 }
 
 /*** ***/
