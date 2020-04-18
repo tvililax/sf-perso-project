@@ -11,18 +11,18 @@
         {% if ad.participants|length > 1 %}
             <p>{{ ad.participants|length}} membres sont intéressés</p>
             {% for user in ad.participants %}
-                <p>{{ user.username }}<p><br/>
+                <p><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a><p><br/>
             {% endfor %}
         {% else %}
             <p> 1 membre est intéressé</p>
             {% for user in ad.participants %}
-                <p>{{ user.username }}<p><br/>
+                <p><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a><p><br/>
             {% endfor %}
         {% endif %}
     {% else %}
         <p>Aucun membre n'est intéressé pour le moment.</p>
     {% endif %}
-    
+
     <table class="table">
         <tbody>
             <tr>

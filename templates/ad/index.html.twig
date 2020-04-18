@@ -8,19 +8,17 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Title</th>
+                <th>Auteur</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Participants</th>
             </tr>
         </thead>
         <tbody>
         {% for ad in ads %}
             <tr>
-                <td>{{ ad.id }}</td>
                 <td><a href="{{ path('user_show', {'id': ad.author.id}) }}">{{ ad.author.username }}</a></td>
                 <td>{{ ad.title }}</td>
-                <td>{{ ad.description }}</td>
+                <td>{{ ad.participants|length }}</td>
                 <td>
                     <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
                     {% if app.user and (app.user.id == ad.author.id) %}
