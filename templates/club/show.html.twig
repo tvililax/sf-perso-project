@@ -11,12 +11,10 @@
 
     <h2>Histoire</h2>
     <p>{{ club.info }}</p>
-    <p> Le club a <b>{{ club.users|length }}</b> {% if club.users|length > 1 %} fans {% else %} fan {% endif %} sur le site</p>
+    <p> Le club a <span class="number">{{ club.users|length }}</span> {% if club.users|length > 1 %} fans {% else %} fan {% endif %} sur le site</p>
     {% for user in club.users %}
         <a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a> <br>
     {% endfor %}
-    
-    <a href="{{ path('club_index') }}">back to list</a>
 
     {# <a href="{{ path('club_edit', {'id': club.id}) }}">edit</a> #}
 

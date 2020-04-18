@@ -3,44 +3,63 @@
 {% block title %}Ad{% endblock %}
 
 {% block body %}
+    {% set flag = false %}
     <h1>{{ ad.title }}</h1>
+    <h3>Créé par <a href="{{ path('user_show', {'id': ad.author.id}) }}">{{ ad.author.username }}</a></h3>
 
     <p style="color:palegreen;">{{ msg }}</p>
-    
-    {% if ad.participants|length > 0 %}
-        {% if ad.participants|length > 1 %}
-            <p>{{ ad.participants|length}} membres sont intéressés</p>
-            {% for user in ad.participants %}
-                <p><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a><p><br/>
-            {% endfor %}
-        {% else %}
-            <p> 1 membre est intéressé</p>
-            {% for user in ad.participants %}
-                <p><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a><p><br/>
-            {% endfor %}
-        {% endif %}
-    {% else %}
-        <p>Aucun membre n'est intéressé pour le moment.</p>
-    {% endif %}
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Author</th>
-                <td><a href="{{ path('user_show', {'id': ad.author.id}) }}">{{ ad.author.username }}</a></td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ ad.description }}</td>
-            </tr>
-        </tbody>
-    </table>
 
     {% if app.user and (app.user.id != ad.author.id) %}
-        <a href="{{ path('ad_addParticipate', {'id': ad.id, 'userId': app.user.id}) }}">JE SUIS INTERESSE</a><br/>
+
+        {% for activity in app.user.activities %}
+
+            {% if activity.id == ad.id %}
+                <a class="cta" href="{{ path('ad_removeParticipate', {'id': ad.id, 'userId': app.user.id}) }}">ANNULER LA PARTICIPATION <i class="fas fa-user-plus"></i></a><br/>
+                {% set flag = true %}
+            {% endif %}
+        
+        {% endfor %}
+
+        {% if not flag %}
+                <a class="cta" href="{{ path('ad_addParticipate', {'id': ad.id, 'userId': app.user.id}) }}">JE SUIS INTÉRESSÉ <i class="fas fa-user-plus"></i></a><br/>
+        {% endif %}
+
     {% endif %}
 
-    <a href="{{ path('ad_index') }}">back to list</a>
+    <div class="table" style="margin-top: 45px; background: #3c3c3c; text-align:center; margin:auto; padding: 10px;">
+    
+        <p>{{ ad.description }}</p>
+            
+    </div>
+
+    {% if ad.participants|length > 0 %}
+
+        {% if ad.participants|length > 1 %}
+
+            <p>{{ ad.participants|length}} membres sont intéressés</p>
+
+            {% for user in ad.participants %}
+
+                <p><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a><p>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p> 1 membre est intéressé</p>
+
+            {% for user in ad.participants %}
+
+                <p><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a><p>
+
+            {% endfor %}
+        {% endif %}
+
+    {% else %}
+
+        <p>Aucun membre n'est intéressé pour le moment.</p>
+
+    {% endif %}
 
     {% if app.user and (app.user.id == ad.author.id) %}
     <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>

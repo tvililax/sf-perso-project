@@ -5,7 +5,7 @@ p,a,ul,a li,tbody,thead,b,i,table,label{
     font-size: 14px;
 }
 
-h1,h2{
+h1,h2,h3{
     font-family: Montserrat;
     color:white;
 }
@@ -64,6 +64,7 @@ body {
 .cta i{
     color:#333;
 }
+
 
 .sm-txt{
     font-size: 10px !important;
@@ -174,7 +175,7 @@ body {
     text-align: left;
 }
 
-.media{
+.media,.number{
     font-family: 'Montserrat';
     font-weight: bold;
 }

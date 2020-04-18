@@ -7,12 +7,12 @@
     {% if app.user and (app.user.id != user.id) %}
     {% for friend in app.user.friends %}
         {% if friend.username == user.username %}
-            <a href="{{ path('user_removefriend', {'id': app.user.id, 'targetId': user.id}) }}">DELETE FRIEND <i class="fas fa-user-times"></i></a>
+            <a class="cta" href="{{ path('user_removefriend', {'id': app.user.id, 'targetId': user.id}) }}">NE PLUS SUIVRE <i class="fas fa-user-times"></i></a>
             {% set flag = true %}
         {% endif %}
     {% endfor %}
         {% if not flag %}
-            <a href="{{ path('user_addfriend', {'id': app.user.id, 'targetId': user.id}) }}">ADD FRIEND <i class="fas fa-user-plus"></i></a>
+            <a class="cta" href="{{ path('user_addfriend', {'id': app.user.id, 'targetId': user.id}) }}">SUIVRE <i class="fas fa-user-plus"></i></a>
         {% endif %}
     {% endif %}
 
@@ -25,7 +25,7 @@
 
                 {% endif %}
     <div id="main-profile">
-        <table class="table bloc-profil">
+        <table class="table bloc-profil" style="width:30%;">
             <tbody>
                 {% if (app.user and (app.user.id == user.id)) %}
                     <tr>
@@ -90,30 +90,29 @@
 
         {% if user.friends|length > 0 %} 
 
-        <p>Mes amis</p>
-
-        {% for friend in user.friends %}
-            <a style="margin-left: 15px;" href="{{ path('user_show', {'id': friend.id}) }}">{{ friend.username }}</a> <br>
-        {% endfor %}
+        <p><span class="number">{{ user.friends|length }}</span> abonnements</p>
+        <p><span class="number">{{ user.users|length }}</span> abonnés</p>
 
         {% else %}
-            <p>Vous n'avez pas encore d'amis :(</p>
+
+            <p>Vous ne suivez encore personne.</p>
+
             {% if user.club %}
+
                 <a href="{{ path('club_show', {'id': user.club.id}) }}"><p>Voir les membres fans de mon club</p></a>
+
             {% endif %}
+
         {% endif %}
 
 
     {% else %}
 
         {% if user.friends|length > 0 %}
-            {% if user.friends|length > 1 %}
-                <p>{{ user.username }} a <b>{{ user.friends|length }}</b> amis.</p>
-            {% else %}
-                <p>{{ user.username }} a <b>{{ user.friends|length }}</b> ami.</p>
-            {% endif %}
+                <p><span class="number">{{ user.friends|length }}</span> abonnements</p>
+                <p><span class="number">{{ user.users|length }}</span> abonnés</p>
         {% else %}
-            <p>{{ user.username }} n'a pas encore d'amis.</p>
+            <p>{{ user.username }} ne suit encore personne.</p>
         {% endif %}
 
     {% endif %}
@@ -122,33 +121,21 @@
 
 <h2>Evènements organisés</h1>
     {% if ads|length > 0 %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
+    <table class="table" style="margin-bottom:15px;">
         <tbody>
-        
             {% for ad in ads %}
-                <tr>
-                    <td>{{ ad.id }}</td>
+                <tr style="line-height:2.5em;">
                     <td>{{ ad.title }}</td>
-                    <td>{{ ad.description }}</td>
                     <td>
-                        <a href="{{ path('ad_show', {'id': ad.id}) }}">show</a>
+                        <a class="cta" href="{{ path('ad_show', {'id': ad.id}) }}">Voir</a>
                         {% if app.user and (app.user.id == user.id) %}
-                            <a href="{{ path('ad_edit', {'id': ad.id}) }}">edit</a>
+                            <a class="cta" href="{{ path('ad_edit', {'id': ad.id}) }}">Modifier</a>
                         {% endif %}
                     </td>
                 </tr>
-                </tbody>
-                </table>
-        
             {% endfor %}
+        </tbody>
+    </table>
 
         {% else %}
             <p>Pas encore d'évènements organisés</p>
@@ -160,7 +147,7 @@
 
     <h2>Participations aux activités</h2>
     {% for activity in user.activities %}
-        <a href="{{ path('ad_show', {'id': activity.id}) }}"> {{ activity.title }}</a>
+        <a href="{{ path('ad_show', {'id': activity.id}) }}"> {{ activity.title }}</a><br>
     {% endfor %}
 
 

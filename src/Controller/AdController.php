@@ -121,4 +121,23 @@ class AdController extends AbstractController
             'msg' => 'Activité ajoutée !',
         ]);
     }
+    
+    /**
+     * @Route("/{id}/removeParticipate/{userId}", name="ad_removeParticipate", methods={"GET","POST"})
+     */
+    public function removeParticipateAction (Request $request, Ad $ad, User $userId): Response
+    {
+        
+        $ad->removeParticipant($userId);
+
+        $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ad);
+            $entityManager->flush();
+
+        return $this->render('ad/show.html.twig', [
+            'ad' => $ad,
+            'msg' => 'Vous n\'êtes plus intéressé par l\'activité',
+        ]);
+    }
+
 }

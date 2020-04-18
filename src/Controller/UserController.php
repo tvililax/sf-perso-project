@@ -116,7 +116,7 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $targetId,
-            'msg' => 'Ami ajouté !',
+            'msg' => 'Vous suivez désormais cet utilisateur',
             'ads' => $targetId->getAds(),
         ]);
     }
@@ -135,7 +135,7 @@ class UserController extends AbstractController
 
         return $this->render('user/show.html.twig', [
             'user' => $targetId,
-            'msg' => 'Ami supprimé !',
+            'msg' => 'Vous ne suivez plus cet utilisateur',
             'ads' => $targetId->getAds(),
         ]);
     }
