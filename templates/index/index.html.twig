@@ -3,45 +3,40 @@
 {% block title %}Mon site - Bienvenue{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+{% set flag = false %}
 
 <div class="example-wrapper">
 
 {% if app.user %}
     <h1>Hello {{ app.user.username }} :)</h1>
+
+    {% for post in posts %}
+
+      {% for friend in app.user.friends %}
+
+        {% if post.author.id == friend.id %}
+          {% set flag = true %}
+          <div class="post-line" style="background:#3c3c3c;">
+            <p> {{ post.author.username }} <br> {{ post.content }} - <span class="sm-txt">{{ post.postedAt|format_datetime(locale='fr') }}</span></p>
+          </div>
+
+        {% endif %}
+
+      {% endfor %}
+      
+
+    {% endfor %}
+
+    {% if not flag %}
+      <p>Il n'y a pas de messages sur votre fil d'actualités :( <br> Suivez plus de personnes.</p>
+    {% endif %}
+
 {% else %}
+
     <h1>Bienvenue</h1>
+
 {% endif %}
 
 </div>
-{% endblock %}
-{% block javascripts %}
-
-<script>
-
-var request = new XMLHttpRequest()
-
-request.open('GET', 'https://ghibliapi.herokuapp.com/films/', true);
-
-request.onload = function() {
-  // Begin accessing JSON data here test
-  var data = JSON.parse(this.response)
-  console.log(data)
-
-  if (request.status >= 200 && request.status < 400) {
-    data.forEach(movie => {
-      console.log(movie.title)
-    })
-  } else {
-    console.log('error')
-  }
-}
-
-request.send();
-
-</script>
 
 {% endblock %}

@@ -75,13 +75,18 @@ class AdController extends AbstractController
      */
     public function edit(Request $request, Ad $ad): Response
     {
+        $user = $this->getUser();
         $form = $this->createForm(AdType::class, $ad);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('ad_index');
+            return $this->render('user/show.html.twig', [
+                'user' => $user,
+                'msg' => 'Evènement modifié avec succès !',
+                'ads' => $user->getAds()
+            ]);
         }
 
         return $this->render('ad/edit.html.twig', [
