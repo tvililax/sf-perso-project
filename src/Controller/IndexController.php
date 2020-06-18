@@ -16,7 +16,7 @@ class IndexController extends AbstractController
     public function index(PostRepository $postRepository)
     {
         return $this->render('index/index.html.twig', [
-            'posts' => $postRepository->listDate(),
+            'posts' => $postRepository->findAll(),
         ]);
     }
 }

@@ -23,7 +23,7 @@ class PostRepository extends ServiceEntityRepository
      * @return Post[] Returns an array of Post objects
      */
     
-    public function listDate()
+    public function findAll()
     {
         return $this->createQueryBuilder('p')
             ->orderBy('p.id', 'DESC')

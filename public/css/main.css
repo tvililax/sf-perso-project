@@ -96,6 +96,13 @@ button.cta{
     text-align:center;
 }
 
+#logo{
+    width: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /*** top navbar ***/
 .mb-3 {
     color: white;
@@ -150,6 +157,10 @@ button.cta{
     font-size: 20px;
 }
 
+.main-navbar li i{
+    font-size: 18px;
+}
+
 .main-navbar li i:hover{
     color:#c3ff99;
 }
@@ -182,6 +193,15 @@ button.cta{
 .media,.number{
     font-family: 'Montserrat';
     font-weight: bold;
+}
+
+#footer{
+    margin-top: 200px;
+}
+
+#footer p{
+    line-height: 0.5em;
+    text-align: center;
 }
 
 .alert.alert-danger{

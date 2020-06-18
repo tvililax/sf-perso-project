@@ -14,6 +14,7 @@
         {% if app.user %}
             <div class="mb-3">
                 <a href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> Se déconnecter</a>
+                <a href="{{ path('index') }}"><img id="logo" src="{{ asset('css/img/mini.png') }}" /></a>
             </div>
             <ul class="main-navbar">
                 <a href="{{ path('index') }}"><li><i class="fas fa-home"></i></li></a>
@@ -22,15 +23,19 @@
                 <a href="{{ path('ad_index') }}"><li><i class="fas fa-calendar-alt"></i></li></a>
             </ul>
         {% else %}
-            <div class="mb-3">
-                <ul>
+            <div class="mb-3" style="margin:0 auto; text-align:center;">
+                <ul style="display: inline-flex;">
                     <a href="{{ path('app_login') }}">
-                        <li>Se connecter</li>
+                        <li>Connexion</li>
                     </a>   
+                    <a href="{{ path('index') }}">
+                        <li><img id="logo" style="margin-top: -20px;" src="{{ asset('css/img/mini.png') }}" /></li>
+                    </a>
                     <a href="{{ path('app_register') }}">
-                        <li>S'inscrire</li>
+                        <li>Inscription</li>
                     </a>
                 </ul>
+                
             </div>
             <ul class="main-navbar">
                 <a href="{{ path('app_logout') }}"><li><i class="fas fa-home"></i></li></a>
@@ -41,5 +46,9 @@
         {% endif %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        <div id="footer">
+            <p>Thomas Da Costa - ECV Digital</p>
+            <p>2019-2020</p>
+        </div>
     </body>
 </html>
