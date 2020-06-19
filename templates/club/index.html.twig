@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon site - Liste des clubs{% endblock %}
+{% block title %}FootFans - Liste des clubs{% endblock %}
 
 {% block body %}
     <h1>Clubs de Ligue 1</h1>
-    <table>
-        <tbody>
+
+    <div id="club-list">
+
         {% for club in clubs %}
-        <tr>
-            <td style="display:flex; flex-direction:column; align-items:center;">
-               <img src="{{ club.logo }}" style="height:30px;" alt="" /> </td>
-            <td>
-               <a style="margin-left: 15px;" href="{{ path('club_show', {'id': club.id}) }}">{{ club.name }} </a>
-            </td>
-                {# <a href="{{ path('club_edit', {'id': club.id}) }}">edit</a> #}
-        </tr>
+        
+        <a href="{{ path('club_show', {'id': club.id}) }}">
+            <div class="club-card">
+            <img src="{{ club.logo }}" style="height:30px;" alt="" />
+                <p>{{ club.name }}</p>
+                <p>{{ club.users|length}} <i class="fas fa-users"></i></p>
+            </div>
+        </a>
+
         {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+
+                <p>no records found</p>
+                
         {% endfor %}
 
-        </tbody>
-    </table>
+    </div>
 
-    {# <a href="{{ path('club_new') }}">Create new</a> #}
 {% endblock %}
 

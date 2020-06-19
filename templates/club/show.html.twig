@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon site - {{ club.name }}{% endblock %}
+{% block title %}FootFans - {{ club.name }}{% endblock %}
 
 {% block body %}
 <div style="height:100px; width:100%; display:flex; justify-content:column; align-items:center;">
@@ -10,7 +10,7 @@
     <i>{{ club.stadium }}</i>
 
     <h2>Histoire</h2>
-    <p>{{ club.info }}</p>
+    <p class="club-info">{{ club.info }}</p>
     <p> Le club a <span class="number">{{ club.users|length }}</span> {% if club.users|length > 1 %} fans {% else %} fan {% endif %} sur le site</p>
     {% for user in club.users %}
         <a href="{{ path('user_show', {'id': user.id}) }}">{{ user.username }}</a> <br>
@@ -21,7 +21,20 @@
     {# {{ include('club/_delete_form.html.twig') }} #}
     <div id="news">
     <h2>Les dernières infos sur le club</h2>
-
+    {% if club.name == ('Stade Brestois') %}
+        <p> Haris Belkebla sur le départ ? - 15/06/2020 - L'Équipe </p>
+        <p> Stade Brestois. C'est imminent pour Honorat - 16/06/2020 - Ouest-France </p>
+        <p> Un jeune amateur arrive au Stade Brestois - 12/06/2020 - France Bleu </p>
+        <p> Quels objectifs pour la saison à venir ? (Stade Brestois) - 12/06/2020 - Ouest-France </p>
+        <p> Le maintien, "reste la priorité" d'après Dall'Oglio - 09/06/2020 - L'Équipe</p>
+    {% endif %}
+    {% if club.name == ('Paris Saint-Germain') %}
+        <p> Cavani et Thiago Silva quittent officiellement le PSG - 15/06/2020 - L'Équipe </p>
+        <p> Mauro Icardi, le 9 tant attendu ? - 16/06/2020 - Le Parisien </p>
+        <p> Al-Khelaifi se réjouit de la reprise de la Ligue des Champions - 12/06/2020 - L'Équipe </p>
+        <p> Aulas soutient le PSG dans sa campagne européenne - 12/06/2020 - Le Parisien </p>
+        <p> Kurzawa, Meuniet et Draxler sur le départ - 09/06/2020 - L'Équipe</p>
+    {% endif %}
     </div>
 {% endblock %}
 
@@ -33,13 +46,12 @@ let clubName = document.getElementById("clubName").innerText.toLowerCase();
 
 var request = new XMLHttpRequest()
 
-request.open('GET', 'https://newsapi.org/v2/everything?q='+clubName+'&language=fr&apiKey=4e996810e3f14fe3bc4e2a05ea00c1f3', true);
+request.open('GET', 'https://api.breakingapi.com/news?type=headlines&q=climate&locale=en-US&api_key=demo', true);
 
 request.onload = function() {
   // Begin accessing JSON data here test
   var data = JSON.parse(this.response)
-  console.log(data.articles)
-
+  console.log(data)
   if (request.status >= 200 && request.status < 400) {
 
     if(data.articles.length <= 9) {
